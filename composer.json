@@ -1,0 +1,21 @@
+{
+    "name": "xapi/fs-manager",
+    "description": "Simple file manager in symfony",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Xapi\\FsManager\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nikolin Majmari",
+            "email": "nikolinmajmari30@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/event-dispatcher": "^5.4",
+        "symfony/http-foundation": "^5.4",
+        "symfony/http-kernel": "^5.4"
+    }
+}
