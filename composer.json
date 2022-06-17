@@ -1,5 +1,5 @@
 {
-    "name": "xapi/fs-manager",
+    "name": "xapi/fs-manager-bundle",
     "description": "Simple file manager in symfony",
     "type": "library",
     "autoload": {
