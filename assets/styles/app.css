@@ -1,4 +1,6 @@
-/* assets/styles/app.css */
-body {
-    background-color: lightgray;
-}
+@import "buttons.css";
+@import "dragable.css";
+@import "entry.css";
+@import "file_manager.css";
+@import "form.css";
+@import "snapshot.css";

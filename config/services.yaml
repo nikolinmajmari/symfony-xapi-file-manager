@@ -1,0 +1,17 @@
+services:
+  Xapi\FsManager\XapiFSManagerBundle:
+    public: true
+
+  Xapi\FsManager\Controllers\SnapshotController:
+    public: true
+    arguments:
+      - '@event_dispatcher'
+      - '@Xapi\FsManager\Snapshot\SnapshotWalker'
+      - '@twig'
+  Xapi\FsManager\Snapshot\SnapshotWalker:
+    public: true
+    arguments:
+      - '@filesystem'
+      - '%xapi.fs_manager.root_folder%'
+
+

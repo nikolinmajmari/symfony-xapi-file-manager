@@ -1,0 +1,50 @@
+.fm-entry {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding: 10px 20px;
+    color: rgb(63, 63, 63);
+    font-weight: bold;
+}
+
+.fm-entry *,
+.fm-entry {
+    cursor: pointer;
+}
+
+.fm-entry:hover {
+    background-color: whitesmoke;
+}
+
+.fm-entry-header {
+    padding: 15px 20px;
+    display: grid;
+    margin-top: 25px;
+    position: sticky;
+    grid-template-columns: repeat(6, 1fr);
+    padding: 10px 20px;
+}
+
+.fm-entry-header div {
+    color: rgb(60, 60, 60);
+    font-weight: bold;
+}
+
+.fm-entry-index {
+    grid-column: 1;
+    display: grid;
+}
+
+.fm-entry-name {
+    grid-column: 2/3;
+    display: grid;
+}
+
+.fm-entry-date {
+    grid-column: 5;
+    display: grid;
+}
+
+.fm-entry-size {
+    grid-column: 6;
+    display: grid;
+}

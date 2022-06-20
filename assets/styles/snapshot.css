@@ -1,0 +1,56 @@
+.snapshot {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    flex-direction: column;
+    background-color: whitesmoke;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.snapshot-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.snapshot-breadcump {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.snapshot-breadcump ul {
+    list-style: none;
+    background-color: rgb(126, 201, 250);
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
+}
+
+.snapshot-breadcump ul li {
+    margin: 0px 5px;
+    color: rgb(2, 67, 97);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.chip {
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: rgb(0, 113, 199);
+}
+
+.snapshot-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: scroll;
+    background-color: white;
+}

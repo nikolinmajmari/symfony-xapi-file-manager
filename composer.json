@@ -1,7 +1,7 @@
 {
     "name": "xapi/fs-manager-bundle",
     "description": "Simple file manager in symfony",
-    "type": "library",
+    "type": "symfony-bundle",
     "autoload": {
         "psr-4": {
             "Xapi\\FsManager\\": "src/"
@@ -16,7 +16,13 @@
     "require": {
         "symfony/event-dispatcher": "^5.4",
         "symfony/http-foundation": "^5.4",
-        "symfony/http-kernel": "^5.4"
+        "symfony/http-kernel": "^5.4",
+        "symfony/framework-bundle": "^5.4",
+        "symfony/filesystem": "^5.4",
+        "symfony/dependency-injection": "^5.4",
+        "symfony/finder": "^5.4",
+        "symfony/twig-bundle": "^5.4",
+        "symfony/asset": "^5.4"
     },
     "require-dev": {
         "symfony/webpack-encore-bundle": "^1.14"

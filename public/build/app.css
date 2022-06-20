@@ -1,0 +1,255 @@
+/*!******************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[1].use[1]!./assets/styles/buttons.css ***!
+  \******************************************************************************************************************/
+
+/*!*******************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[1].use[1]!./assets/styles/dragable.css ***!
+  \*******************************************************************************************************************/
+
+/*!****************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[1].use[1]!./assets/styles/entry.css ***!
+  \****************************************************************************************************************/
+.fm-entry {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding: 10px 20px;
+    color: rgb(63, 63, 63);
+    font-weight: bold;
+}
+
+.fm-entry *,
+.fm-entry {
+    cursor: pointer;
+}
+
+.fm-entry:hover {
+    background-color: whitesmoke;
+}
+
+.fm-entry-header {
+    padding: 15px 20px;
+    display: grid;
+    margin-top: 25px;
+    position: sticky;
+    grid-template-columns: repeat(6, 1fr);
+    padding: 10px 20px;
+}
+
+.fm-entry-header div {
+    color: rgb(60, 60, 60);
+    font-weight: bold;
+}
+
+.fm-entry-index {
+    grid-column: 1;
+    display: grid;
+}
+
+.fm-entry-name {
+    grid-column: 2/3;
+    display: grid;
+}
+
+.fm-entry-date {
+    grid-column: 5;
+    display: grid;
+}
+
+.fm-entry-size {
+    grid-column: 6;
+    display: grid;
+}
+/*!***********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[1].use[1]!./assets/styles/file_manager.css ***!
+  \***********************************************************************************************************************/
+html,
+body {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+    background-color: whitesmoke;
+}
+
+.file-manager {
+    display: flex;
+    flex: 1;
+    margin: 15px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: white;
+    flex-direction: column;
+}
+
+.fm-header {
+    display: flex;
+    padding-top: 10px;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+/**
+* Search Field
+**/
+
+.fm-search-field {
+    background-color: whitesmoke;
+    border-radius: 15px;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.fm-search-field>input:focus {
+    outline: none;
+    border: none;
+}
+
+.fm-search-field svg {
+    color: rgb(44, 40, 40);
+    height: 20px;
+}
+
+.fm-search-field>input {
+    border: none;
+    background-color: whitesmoke;
+}
+
+.fm-action-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+/**
+Buttons -- upload
+**/
+
+.mx-2 {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.mb-2 {
+    margin-bottom: 4px;
+}
+
+.fm-btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    color: rgb(38, 38, 38);
+    outline: none;
+    border: solid rgb(192, 192, 192) 1px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fm-btn * {
+    cursor: pointer;
+}
+
+.fm-btn:focus {
+    outline: none;
+}
+
+.fm-btn:hover {
+    background-color: white;
+}
+
+.fm-upload-btn {
+    background-color: rgb(0, 105, 186);
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+.fm-upload-btn:hover {
+    background-color: rgb(0, 74, 131);
+    border: none;
+}
+
+.fm-create-folder {
+    background-color: rgb(195, 215, 240);
+    color: rgb(0, 66, 116);
+    font-weight: bold;
+}
+
+.fm-create-folder:hover {
+    color: white;
+    background-color: rgb(0, 105, 186);
+}
+/*!***************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[1].use[1]!./assets/styles/form.css ***!
+  \***************************************************************************************************************/
+
+/*!*******************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[1].use[1]!./assets/styles/snapshot.css ***!
+  \*******************************************************************************************************************/
+.snapshot {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    flex-direction: column;
+    background-color: whitesmoke;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.snapshot-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.snapshot-breadcump {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.snapshot-breadcump ul {
+    list-style: none;
+    background-color: rgb(126, 201, 250);
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
+}
+
+.snapshot-breadcump ul li {
+    margin: 0px 5px;
+    color: rgb(2, 67, 97);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.chip {
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: rgb(0, 113, 199);
+}
+
+.snapshot-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: scroll;
+    background-color: white;
+}
+/*!**************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[1].use[1]!./assets/styles/app.css ***!
+  \**************************************************************************************************************/
+

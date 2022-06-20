@@ -2,13 +2,24 @@
 
 namespace Xapi\FsManager;
 
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Xapi\FsManager\DependencyInjection\XapiFSManagerExtension;
 
 class XapiFSManagerBundle extends Bundle
 {
     public function getPath(): string
     {
-        die();
         return \dirname(__DIR__);
     }
+
+    public function getContainerExtension(): XapiFSManagerExtension
+    {
+        if (null === $this->extension) {
+            $this->extension = new XapiFSManagerExtension();
+        }
+        return $this->extension;
+    }
+
+
 }

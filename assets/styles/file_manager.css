@@ -1,0 +1,124 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+    background-color: whitesmoke;
+}
+
+.file-manager {
+    display: flex;
+    flex: 1;
+    margin: 15px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: white;
+    flex-direction: column;
+}
+
+.fm-header {
+    display: flex;
+    padding-top: 10px;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+/**
+* Search Field
+**/
+
+.fm-search-field {
+    background-color: whitesmoke;
+    border-radius: 15px;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.fm-search-field>input:focus {
+    outline: none;
+    border: none;
+}
+
+.fm-search-field svg {
+    color: rgb(44, 40, 40);
+    height: 20px;
+}
+
+.fm-search-field>input {
+    border: none;
+    background-color: whitesmoke;
+}
+
+.fm-action-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+/**
+Buttons -- upload
+**/
+
+.mx-2 {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.mb-2 {
+    margin-bottom: 4px;
+}
+
+.fm-btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    color: rgb(38, 38, 38);
+    outline: none;
+    border: solid rgb(192, 192, 192) 1px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fm-btn * {
+    cursor: pointer;
+}
+
+.fm-btn:focus {
+    outline: none;
+}
+
+.fm-btn:hover {
+    background-color: white;
+}
+
+.fm-upload-btn {
+    background-color: rgb(0, 105, 186);
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+.fm-upload-btn:hover {
+    background-color: rgb(0, 74, 131);
+    border: none;
+}
+
+.fm-create-folder {
+    background-color: rgb(195, 215, 240);
+    color: rgb(0, 66, 116);
+    font-weight: bold;
+}
+
+.fm-create-folder:hover {
+    color: white;
+    background-color: rgb(0, 105, 186);
+}

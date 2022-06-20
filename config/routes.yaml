@@ -1,0 +1,12 @@
+xapi_fs_manager_snapshot_get:
+  path: /snapshot
+  methods:
+    - GET
+  controller: Xapi\FsManager\Controllers\SnapshotController::getSnapshot
+
+
+xapi_fs_manager_snapshot_transfer_move:
+  path: /snapshotTransfer
+  methods:
+    - GET
+  controller: Xapi\FsManager\Controllers\SnapshotTransferController::moveSnapshot
