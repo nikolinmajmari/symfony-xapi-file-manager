@@ -1,6 +1,3 @@
-@import "buttons.css";
-@import "dragable.css";
-@import "entry.css";
-@import "file_manager.css";
-@import "form.css";
-@import "snapshot.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

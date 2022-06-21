@@ -1,52 +1,12 @@
+<!doctype html>
 <html>
 <head>
     <link rel="stylesheet" href="{{ asset('bundles/xapifsmanager/build/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/xapifsmanager/build/tailwind.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/xapifsmanager/manifest.json') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/xapifsmanager/entrypoints.json') }}">
 </head>
 <body>
-<div class="file-manager">
-    <div class="fm-header">
-        <div class="fm-search-field">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor"></rect>
-                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor"></path>
-            </svg>
-            <input />
-        </div>
-        <div class="fm-action-container">
-            <button class="mx-2 mb-2 fm-btn fm-upload-btn">Upload</button>
-            <button class="fm-create-folder fm-btn mx-2 mb-2">Create Folder</button>
-        </div>
-    </div>
-    <div class="snapshot">
-        <div class="snapshot-nav">
-            <div class="snapshot-breadcump">
-                <ul>
-                    <li>/</li>
-                    <li>></li>
-                    <li>files</li>
-                    <li>></li>
-                    <li>users</li>
-                </ul>
-                <div>shield</div>
-            </div>
-            <div class="chip">23 files</div>
-        </div>
-        <div class="fm-entry-header">
-            <div class="fm-entry-index">#</div>
-            <div class="fm-entry-name">name</div>
-            <div class="fm-entry-date">last edit</div>
-            <div class="fm-entry-size">size</div>
-        </div>
-        <div class="snapshot-container">
-            {% for entrie in entries %}
-                {% include '@XapiFSManager/snapshot/entry.html.twig' with {"index":loop.index,"name":entrie.alias,"last_edit":entrie.lastEdit|date("y-m-d h-i-s"),"size":entrie.size} %}
-            {% endfor %}
-        </div>
-    </div>
+<div id="root">
 </div>
-<script {{ asset('build/app.js') }}></script>
+<script type="text/javascript" src="{{ asset("bundles/xapifsmanager/build/vendors-node_modules_reduxjs_toolkit_dist_redux-toolkit_esm_js-node_modules_core-js_modules_e-f93b65.js") }}"></script>
+<script type="text/javascript" defer="defer" src="{{ asset('bundles/xapifsmanager/build/app.js')}}"></script>
 </body>
 </html>
