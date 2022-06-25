@@ -1,12 +1,12 @@
 <?php
 
-namespace Xapi\FsManager\Events;
+namespace Xapi\FSManager\Events;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
 class FsManagerAccessRequestEvent extends Event
 {
-    const NAME = FsManagerEvents::FsManagerAccessRequestEvent;
+    const NAME = FsManagerEvents::FSManagerAccessRequestEvent;
 
     private string $requestedContext;
     /**
