@@ -4,21 +4,19 @@ import { FiEye } from "react-icons/fi";
 import { MdDriveFileMoveOutline } from "react-icons/md";
 
 export interface ContextMenuIPropsInterface {
-  anchor: { x: number; y: number };
-  show: boolean;
+  entryRef: React.RefObject<HTMLDivElement>;
+  onDelete:Function
+  onDownload:Function,
 }
 
 export default function FMSnapshotContextMenu({
-  entryRef,
-}: {
-  entryRef: React.RefObject<HTMLDivElement>;
-}) {
+  entryRef,onDelete,onDownload
+}:ContextMenuIPropsInterface) {
   const [showMenu, setShowMenu] = React.useState<boolean>(false);
 
   const [anchorPoint, setAnchorPoint] = React.useState({ x: 0, y: 0 });
 
   const handleContextMenu = (e: MouseEvent) => {
-    console.log("dispatching", e, entryRef.current, e.target);
     if (entryRef.current?.contains(e.target as Node)) {
       e.preventDefault();
       setAnchorPoint({ x: e.pageX, y: e.pageY });
@@ -32,10 +30,12 @@ export default function FMSnapshotContextMenu({
 
   React.useEffect(() => {
     document.addEventListener("contextmenu", handleContextMenu);
+    document.addEventListener("dblclick",handleContextMenu);
     document.addEventListener("click", handleClick);
 
     return () => {
       document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("dblclick",handleContextMenu);
       document.removeEventListener("click", handleClick);
     };
   }, []);
@@ -64,12 +64,12 @@ export default function FMSnapshotContextMenu({
           <div className="w-2"></div>
           <label>View Details</label>
         </div>
-        <div className="cursor-pointer hover:bg-gray-100 px-8 py-4 flex flex-row justify-start">
+        <div onClick={()=>onDownload()} className="cursor-pointer hover:bg-gray-100 px-8 py-4 flex flex-row justify-start">
           <AiOutlineCloudDownload size={20} />
           <div className="w-2"></div>
           <label>Download</label>
         </div>
-        <div className=" border-t border-gray-300 cursor-pointer hover:bg-gray-100 px-8 py-4 flex flex-row justify-start">
+        <div onClick={()=>onDelete()} className=" border-t border-gray-300 cursor-pointer hover:bg-gray-100 px-8 py-4 flex flex-row justify-start">
           <AiOutlineDelete size={20} />
           <div className="w-2"></div>
           <label>Delete</label>

@@ -1,13 +1,13 @@
 <?php
 
-namespace Xapi\FsManager\Snapshot;
+namespace Xapi\FSManager\Snapshot;
 
 use Exception;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Xapi\FsManager\DTO\Snapshot;
-use Xapi\FsManager\DTO\SnapshotEntry;
+use Xapi\FSManager\DTO\Snapshot;
+use Xapi\FSManager\DTO\SnapshotEntry;
 
 class SnapshotWalker implements SnapshotWalkerInterface, ContextInterface
 {
@@ -15,7 +15,7 @@ class SnapshotWalker implements SnapshotWalkerInterface, ContextInterface
     const ROOT = "";
     private WalkerInterface $walker;
 
-    function __construct(WalkerInterface $walker)
+    function __construct(ScopedWalker $walker)
     {
         $this->walker = $walker;
     }
@@ -27,20 +27,45 @@ class SnapshotWalker implements SnapshotWalkerInterface, ContextInterface
     {
         return (new Snapshot())
             ->setChildren(
-                array_map(
-                    fn(SplFileInfo $info)=>new SnapshotEntry($info),
-                    $this->walker->getEntries()
-                )
+                array_map(fn(SplFileInfo $entry)=>new SnapshotEntry($entry),$this->walker->getEntries())
             )
             ->setEntry($this->head())
-            ->setAncestors([]);
+            ->setAncestors(
+                $this->getAncestors()
+            );
     }
 
+    public function getAncestors():array{
+        $ancestors = [];
+        $ancestorsNames = explode(DIRECTORY_SEPARATOR,$this->walker->getContext());
+        $ancestor = null;
+        foreach($ancestorsNames as $name){;
+            if($ancestor!==null){
+                $ancestor = $ancestor.DIRECTORY_SEPARATOR.$name;
+            }else{
+                $ancestor = $name;
+            }
+            $ancestors[]=$ancestor;
+        }
+        return $ancestors;
+    }
 
+    public function createDir(?string $dirName){
+        if($dirName==null){
+            throw new Exception("please defined idr name");
+        }
+        $info = $this->walker->mkDir($dirName);
+        if($info){
+            return new SnapshotEntry($info,$this->walker->getContext(),implode(DIRECTORY_SEPARATOR,[$this->walker->getContext(),$dirName]));
+        }else{
+            throw new Exception("Could not open file");
+        }
+    }
 
-    function remove(): bool
+    function remove():bool
     {
-        // TODO: Implement remove() method.
+        $this->walker->remove();
+        return true;
     }
 
     function compress(): SnapshotEntry

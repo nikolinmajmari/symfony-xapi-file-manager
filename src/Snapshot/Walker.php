@@ -1,6 +1,6 @@
 <?php
 
-namespace Xapi\FsManager\Snapshot;
+namespace Xapi\FSManager\Snapshot;
 
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Finder\Finder;
@@ -73,8 +73,64 @@ class Walker implements WalkerInterface
         $this->context = $context;
     }
 
+    /**
+     * @return string
+     */
     function getContext(): string
     {
         return $this->context;
+    }
+
+    /**
+     * @param string $name
+     * @return \SplFileInfo|null
+     */
+    function mkDir(string $name): ?\SplFileInfo
+    {
+        $path = implode(DIRECTORY_SEPARATOR,[$this->getContext(),$name]);
+        if(mkdir($path)){
+            return new \SplFileInfo($path);
+        }
+        return null;
+    }
+
+    /**
+     * @return void
+     */
+    function remove(): void
+    {
+        if(str_contains($this->getContext(),"storage")){
+            if($this->isDir()){
+                self::delTree($this->context);
+            }else{
+                unlink($this->getContext());
+            }
+        }
+    }
+
+    /**
+     * @return \SplFileInfo
+     * @throws \Exception
+     */
+    function achive(): \SplFileInfo
+    {
+        throw new \Exception("not implemented yet");
+    }
+
+    /**
+     * @param $dir
+     * @return void
+     */
+    static function delTree($dir){
+        $files = array_diff(scandir($dir),[".",".."]);
+        foreach($files as $file){
+            $path = $dir.DIRECTORY_SEPARATOR.$file;
+            if(is_dir($path)){
+                self::delTree($path);
+            }else{
+                unlink($path);
+            }
+        }
+        rmdir($dir);
     }
 }

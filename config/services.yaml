@@ -1,24 +1,24 @@
 services:
-  Xapi\FsManager\XapiFSManagerBundle:
+  Xapi\FSManager\XapiFSManagerBundle:
     public: true
 
-  Xapi\FsManager\Controllers\SnapshotController:
+  Xapi\FSManager\Controllers\SnapshotController:
     public: true
     arguments:
       - '@event_dispatcher'
-      - '@Xapi\FsManager\Snapshot\SnapshotWalker'
-      - '@serializer'
+      - '@Xapi\FSManager\Snapshot\SnapshotWalker'
+      - '@twig'
 
-  Xapi\FsManager\Snapshot\SnapshotWalker:
+  Xapi\FSManager\Snapshot\SnapshotWalker:
     public: true
     arguments:
-      - '@Xapi\FsManager\Snapshot\ScopedWalker'
+      - '@Xapi\FSManager\Snapshot\ScopedWalker'
 
-  Xapi\FsManager\Snapshot\Walker:
+  Xapi\FSManager\Snapshot\Walker:
     public: true
 
-  Xapi\FsManager\Snapshot\ScopedWalker:
+  Xapi\FSManager\Snapshot\ScopedWalker:
     public: true
     arguments:
-      - '@Xapi\FsManager\Snapshot\Walker'
+      - '@Xapi\FSManager\Snapshot\Walker'
       - '%xapi.fs_manager.root_folder%'

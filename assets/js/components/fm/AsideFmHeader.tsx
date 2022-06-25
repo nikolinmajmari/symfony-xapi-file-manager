@@ -36,18 +36,21 @@ export function NewFolderModal({
     }
   };
   React.useEffect(() => {
-    console.log("using effect");
     document.addEventListener("click", clickHandler);
     return () => {
       document.removeEventListener("click", clickHandler);
     };
   }, []);
-
+  const [newFolderName,setNewFolderName] = React.useState<string>("");
   const modalRef = React.useRef<HTMLDivElement>(null);
   const overlayRef = React.useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const handleCreateFolder = async () => {
-    dispatch(createFolder("folder"));
+    dispatch(createFolder({
+      parent:"",
+      folderName:newFolderName
+    }));
+    setNewFolderName("");
     setShowModal(false);
   };
   return (
@@ -80,6 +83,8 @@ export function NewFolderModal({
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="username"
+                  value={newFolderName}
+                  onChange={(e)=>setNewFolderName(e.target.value)}
                   type="text"
                   placeholder="New Folder Name"
                 />

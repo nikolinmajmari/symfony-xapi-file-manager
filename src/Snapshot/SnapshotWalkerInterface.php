@@ -1,9 +1,9 @@
 <?php
 
-namespace Xapi\FsManager\Snapshot;
+namespace Xapi\FSManager\Snapshot;
 
-use Xapi\FsManager\DTO\Snapshot;
-use Xapi\FsManager\DTO\SnapshotEntry;
+use Xapi\FSManager\DTO\Snapshot;
+use Xapi\FSManager\DTO\SnapshotEntry;
 
 interface SnapshotWalkerInterface
 {

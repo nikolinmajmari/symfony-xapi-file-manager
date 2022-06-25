@@ -8,27 +8,30 @@ import {
   AiFillFileWord,
   AiFillFolder,
 } from "react-icons/ai";
-import { FSSnapshotEntry } from "../../api/resource/fs_snapshot_entry";
+import xapiClient from "../../api/client/xapi_fs_client";
+import { SnapshotEntry } from "../../api/resource/snapshot_entry";
+import { useAppDispatch } from "../../app/hooks";
+import { deleteSnapshot, getSnapshot } from "../../features/snapshot/snapshotSlice";
 import FMSnapshotContextMenu from "./FMSnapshotContextMenu";
 export interface FMSnapshotEntryPropsInterface {
-  entry: FSSnapshotEntry;
+  entry: SnapshotEntry;
 }
 
 export function resolveIconOnFileType(type: string) {
   switch (type) {
-    case "Folder":
+    case "dir":
       return <AiFillFolder size={24} />;
-    case "File":
+    case "file":
       return <AiFillFile size={24} />;
-    case "Word":
+    case "word":
       return <AiFillFileWord size={24} />;
-    case "Exel":
+    case "exel":
       return <AiFillFileExcel size={24} />;
-    case "Image":
+    case "img":
       return <AiFillFileImage size={24} />;
-    case "Pdf":
+    case "pdf":
       return <AiFillFilePdf size={24} />;
-    case "Ppt":
+    case "ppt":
       return <AiFillFilePpt size={24} />;
     default:
       return <AiFillFile size={24} />;
@@ -36,7 +39,7 @@ export function resolveIconOnFileType(type: string) {
 }
 
 export function FMSnapshotEntry(props: FMSnapshotEntryPropsInterface) {
-  const icon = resolveIconOnFileType(props.entry.mime);
+  const icon = resolveIconOnFileType(props.entry.mime||props.entry.type);
   const [selected, setSelected] = React.useState<boolean>(false);
   const entryRef = React.useRef<HTMLDivElement>(null);
   const onEntryClick = (e: MouseEvent) => {
@@ -52,6 +55,21 @@ export function FMSnapshotEntry(props: FMSnapshotEntryPropsInterface) {
       document.removeEventListener("click", onEntryClick);
     };
   }, []);
+  
+
+  /// state managemenet 
+
+  const dispatch = useAppDispatch();
+
+  const handleDelete = ()=>{
+    setSelected(true);
+    dispatch(deleteSnapshot(props.entry.id));
+  };
+
+  const handleGoDown = ()=>{
+    dispatch(getSnapshot(props.entry.id));
+  }
+
   return (
     <div
       className={`element grid grid-cols-11 py-3 border-gray-300 ${
@@ -64,11 +82,11 @@ export function FMSnapshotEntry(props: FMSnapshotEntryPropsInterface) {
       <div className="col-span-6 px-2 flex flex-row">
         {icon}
         <div className="w-2"></div>
-        <label>{props.entry.name}</label>
+        <label onClick={(e)=>handleGoDown()}>{props.entry.name}</label>
       </div>
       <div className="col-span-2 px-2">{props.entry.name}</div>
       <div className="col-span-2 px-2">{props.entry.name}</div>
-      <FMSnapshotContextMenu entryRef={entryRef} />
+      <FMSnapshotContextMenu entryRef={entryRef} onDelete={handleDelete} onDownload={()=>xapiClient.downloadFile(props.entry.id)} />
     </div>
   );
 }

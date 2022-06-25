@@ -1,6 +1,6 @@
 <?php
 
-namespace Xapi\FsManager\DependencyInjection;
+namespace Xapi\FSManager\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

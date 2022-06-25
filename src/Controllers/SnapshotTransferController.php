@@ -1,6 +1,6 @@
 <?php
 
-namespace Xapi\FsManager\Controllers;
+namespace Xapi\FSManager\Controllers;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 

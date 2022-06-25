@@ -1,6 +1,6 @@
 <?php
 
-namespace Xapi\FsManager\Snapshot;
+namespace Xapi\FSManager\Snapshot;
 
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -26,5 +26,11 @@ interface WalkerInterface extends ContextInterface
     function contains(\SplFileInfo $info):array;
 
     function isDir():bool;
+
+    function mkDir(string $name):?\SplFileInfo;
+
+    function remove():void;
+
+    function achive():\SplFileInfo;
 
 }

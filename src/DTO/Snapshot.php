@@ -1,8 +1,7 @@
 <?php
 
-namespace Xapi\FsManager\DTO;
+namespace Xapi\FSManager\DTO;
 
-use JetBrains\PhpStorm\Internal\TentativeType;
 use Symfony\Component\Finder\SplFileInfo;
 
 class Snapshot implements \JsonSerializable

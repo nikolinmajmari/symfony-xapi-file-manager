@@ -1,6 +1,6 @@
 <?php
 
-namespace Xapi\FsManager\Snapshot;
+namespace Xapi\FSManager\Snapshot;
 
 interface FsFilterInterface
 {

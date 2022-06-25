@@ -1,6 +1,6 @@
 <?php
 
-namespace Xapi\FsManager\Events;
+namespace Xapi\FSManager\Events;
 
 final class FSManagerEvents
 {

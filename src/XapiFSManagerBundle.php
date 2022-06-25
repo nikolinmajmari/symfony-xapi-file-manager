@@ -2,7 +2,7 @@
 
 namespace Xapi\FSManager;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Xapi\FsManager\DependencyInjection\XapiFSManagerExtension;
+use Xapi\FSManager\DependencyInjection\XapiFSManagerExtension;
 
 class XapiFSManagerBundle extends Bundle
 {

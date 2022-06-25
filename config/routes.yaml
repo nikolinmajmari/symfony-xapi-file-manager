@@ -2,17 +2,38 @@ xapi_fs_manager_snapshot_get:
   path: /snapshot
   methods:
     - GET
-  controller: Xapi\FsManager\Controllers\SnapshotController::getSnapshot
+  controller: Xapi\FSManager\Controllers\SnapshotController::getSnapshot
 
 xapi_fs_manager_snapshot_download:
   path: /snapshot/download
   methods:
     - GET
-  controller: Xapi\FsManager\Controllers\SnapshotController::downloadFile
+  controller: Xapi\FSManager\Controllers\SnapshotController::downloadFile
 
+xapi_fs_manager_snapshot_delete:
+  path: /snapshot/delete
+  methods:
+    - DELETE
+    - POST
+  controller: Xapi\FSManager\Controllers\SnapshotController::deleteSnapshot
+
+
+
+xapi_fs_manager_snapshot_create_dir:
+  path: /snapshot/create_dir
+  methods:
+    - GET
+    - POST
+  controller: Xapi\FSManager\Controllers\SnapshotController::createDirectory
+
+xapi_fs_manager_client:
+  path: /client
+  methods:
+    - GET
+  controller: Xapi\FSManager\Controllers\SnapshotController::getReactClient
 
 xapi_fs_manager_snapshot_transfer_move:
   path: /snapshotTransfer
   methods:
     - GET
-  controller: Xapi\FsManager\Controllers\SnapshotTransferController::moveSnapshot
+  controller: Xapi\FSManager\Controllers\SnapshotTransferController::moveSnapshot

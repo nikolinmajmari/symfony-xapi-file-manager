@@ -1,23 +1,23 @@
 <?php
 
-namespace Xapi\FsManager\DTO;
+namespace Xapi\FSManager\DTO;
 
 use Exception;
 use Symfony\Component\Finder\SplFileInfo;
 
 class SnapshotEntry implements \JsonSerializable
 {
-    private SplFileInfo $splFileInfo;
+    private \SplFileInfo $splFileInfo;
 
     private string $relativePath;
 
     private string $relativePathname;
 
-    public function __construct(SplFileInfo $splFileInfo,?string $relativePath=null,?string $relativePathname=null)
+    public function __construct(SplFileInfo $splFileInfo)
     {
         $this->splFileInfo = $splFileInfo;
-        $this->relativePath = $relativePath??$this->splFileInfo->getRelativePath();
-        $this->relativePathname =$relativePathname?? $this->splFileInfo->getRelativePathname();
+        $this->relativePath = $this->splFileInfo->getRelativePath();
+        $this->relativePathname = $this->splFileInfo->getRelativePathname();
     }
 
     /**
@@ -44,26 +44,28 @@ class SnapshotEntry implements \JsonSerializable
         return $this->relativePathname;
     }
     /**
-     * @return SplFileInfo
+     * @return \SplFileInfo
      */
-    public function getSplFileInfo(): SplFileInfo
+    public function getSplFileInfo(): \SplFileInfo
     {
         return $this->splFileInfo;
     }
+
+
 
     /**
      * @return array
      */
     public function __serialize(): array
     {
-        $isDir = $this->splFileInfo->isDir();
         return [
-            "id"=>$this->splFileInfo->getRelativePathname(),
+            "id"=>$this->getRelativePathname(),
             "name"=>$this->splFileInfo->getFilename(),
-            "size"=>$isDir?null:$this->splFileInfo->getSize(),
-            "a_time"=>$isDir?null:$this->splFileInfo->getATime(),
-            "m_time"=>$isDir?null:$this->splFileInfo->getMTime(),
-            "type"=>$this->splFileInfo->getType(),
+            "size"=>file_exists($this->splFileInfo->getPathname())?$this->splFileInfo->getSize():null,
+            "a_time"=>file_exists($this->splFileInfo->getPathname())?$this->splFileInfo->getATime():null,
+            "m_time"=>file_exists($this->splFileInfo->getPathname())?$this->splFileInfo->getMTime():null,
+            "type"=>file_exists($this->splFileInfo->getPathname())?$this->splFileInfo->getType():null,
+            'mime'=>file_exists($this->splFileInfo->getPathname())?$this->splFileInfo->getType():null,
         ];
     }
 

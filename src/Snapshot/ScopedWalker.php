@@ -1,12 +1,13 @@
 <?php
 
-namespace Xapi\FsManager\Snapshot;
+namespace Xapi\FSManager\Snapshot;
 
 use Symfony\Bridge\Twig\NodeVisitor\Scope;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Xapi\FsManager\DTO\Snapshot;
+use Xapi\FSManager\DTO\Snapshot;
+use Xapi\FSManager\DTO\SnapshotEntry;
 
 class ScopedWalker implements WalkerInterface
 {
@@ -52,6 +53,7 @@ class ScopedWalker implements WalkerInterface
     private function getScopedPath(string $path):string{
         return str_replace($this->scope,"",$path);
     }
+
     function contains(\SplFileInfo $info): array
     {
         return $this->walker->contains($info);
@@ -84,5 +86,31 @@ class ScopedWalker implements WalkerInterface
     public function isDir(): bool
     {
         return is_dir($this->getContext());
+    }
+
+    function mkDir(string $name): ?SplFileInfo
+    {
+         if($this->walker->mkDir($name)){
+             $path = implode(DIRECTORY_SEPARATOR,[
+                 $this->walker->getContext(),$name
+             ]);
+             return new SplFileInfo($path,$this->getContext(),implode(DIRECTORY_SEPARATOR,[
+                 $this->getContext(),$name
+             ]));
+         }
+         throw new \Exception("Dir could not be created");
+    }
+
+    function remove(): void
+    {
+        if($this->getContext()==""||$this->getContext()==DIRECTORY_SEPARATOR){
+            throw new \Error("you can not delete the root");
+        }
+        $this->walker->remove();
+    }
+
+    function achive(): SplFileInfo
+    {
+        // TODO: Implement achive() method.
     }
 }
