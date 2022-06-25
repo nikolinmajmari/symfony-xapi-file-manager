@@ -2,154 +2,81 @@
 
 namespace Xapi\FsManager\DTO;
 
+use Exception;
 use Symfony\Component\Finder\SplFileInfo;
 
-class SnapshotEntry
+class SnapshotEntry implements \JsonSerializable
 {
-    /**
-     * @var string
-     */
-    private string $id;
-    /**
-     * @var string $type Snapshot entry type
-     */
-    private string $type;
-    /**
-     * @var string
-     */
-    private string $alias;
-    /**
-     * @var float
-     */
-    private float $size;
-    /**
-     * @var \DateTime
-     */
-    private \DateTime $lastEdit;
-    /**
-     * @var array
-     */
-    private array $tags;
+    private SplFileInfo $splFileInfo;
+
+    private string $relativePath;
+
+    private string $relativePathname;
+
+    public function __construct(SplFileInfo $splFileInfo,?string $relativePath=null,?string $relativePathname=null)
+    {
+        $this->splFileInfo = $splFileInfo;
+        $this->relativePath = $relativePath??$this->splFileInfo->getRelativePath();
+        $this->relativePathname =$relativePathname?? $this->splFileInfo->getRelativePathname();
+    }
 
     /**
+     * Returns the relative path.
+     *
+     * This path does not contain the file name.
+     *
      * @return string
      */
-    public function getId(): string
+    public function getRelativePath(): string
     {
-        return $this->id;
+        return $this->relativePath;
     }
 
     /**
-     * @param string $id
-     */
-    public function setId(string $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
+     * Returns the relative path name.
+     *
+     * This path contains the file name.
+     *
      * @return string
      */
-    public function getType(): string
+    public function getRelativePathname(): string
     {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-        return $this;
+        return $this->relativePathname;
     }
     /**
-     * @return string
+     * @return SplFileInfo
      */
-    public function getAlias(): string
+    public function getSplFileInfo(): SplFileInfo
     {
-        return $this->alias;
-    }
-
-    /**
-     * @param string $alias
-     */
-    public function setAlias(string $alias): self
-    {
-        $this->alias = $alias;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getLastEdit(): \DateTime
-    {
-        return $this->lastEdit;
-    }
-
-    /**
-     * @param \DateTime $lastEdit
-     */
-    public function setLastEdit(\DateTime $lastEdit): self
-    {
-        $this->lastEdit = $lastEdit;
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getSize(): float
-    {
-        return $this->size;
-    }
-
-    /**
-     * @param float $size
-     */
-    public function setSize(float $size): self
-    {
-        $this->size = $size;
-        return $this;
+        return $this->splFileInfo;
     }
 
     /**
      * @return array
      */
-    public function getTags(): array
+    public function __serialize(): array
     {
-        return $this->tags;
+        $isDir = $this->splFileInfo->isDir();
+        return [
+            "id"=>$this->splFileInfo->getRelativePathname(),
+            "name"=>$this->splFileInfo->getFilename(),
+            "size"=>$isDir?null:$this->splFileInfo->getSize(),
+            "a_time"=>$isDir?null:$this->splFileInfo->getATime(),
+            "m_time"=>$isDir?null:$this->splFileInfo->getMTime(),
+            "type"=>$this->splFileInfo->getType(),
+        ];
     }
 
-    /**
-     * @param array $tags
-     */
-    public function setTags(array $tags): self
-    {
-        $this->tags = $tags;
-        return $this;
+    public function getSize(){
+        try{
+            return $this->splFileInfo->getSize();
+        }catch (\Exception $e){
+            return null;
+        }
     }
 
-
-    /**
-     * @throws \Exception
-     */
-    static function fromSplFileInfo(SplFileInfo $info,string $base): SnapshotEntry
+    public function jsonSerialize()
     {
-        return (new self())
-            ->setAlias(str_replace($base,"",$info->getBasename()))
-            ->setId(str_replace($base,"",$info->getPathname()))
-            ->setLastEdit(
-                \DateTime::createFromFormat(
-                    "Y-m-d H:i:s",
-                    date("Y-m-d H:i:s",$info->getMTime()
-                    )
-                )
-            )
-            ->setSize($info->getSize())
-            ->setType($info->getType())
-            ;
+        return $this->__serialize();
     }
 }

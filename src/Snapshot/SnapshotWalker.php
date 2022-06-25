@@ -5,46 +5,99 @@ namespace Xapi\FsManager\Snapshot;
 use Exception;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Finder\SplFileInfo;
+use Xapi\FsManager\DTO\Snapshot;
 use Xapi\FsManager\DTO\SnapshotEntry;
 
-class SnapshotWalker
+class SnapshotWalker implements SnapshotWalkerInterface, ContextInterface
 {
-    private ?Filesystem $fileSystem;
+    const CONTEXT = "context";
+    const ROOT = "";
+    private WalkerInterface $walker;
 
-    private string $root;
-
-    private $pointer;
-
-    public function __construct(Filesystem $filesystem,$root)
+    function __construct(WalkerInterface $walker)
     {
-        $this->fileSystem = $filesystem;
-        $this->root = $root;
-        $this->pointer = DIRECTORY_SEPARATOR;
-    }
-
-    public function point(string $path):void{
-
-        $path = str_replace("..","",$path);
-        $path = htmlspecialchars($path,ENT_QUOTES);
-        $this->pointer = $path;
-    }
-
-    public function getAbsolutePointer():string{
-        return $this->root.$this->pointer;
+        $this->walker = $walker;
     }
 
     /**
      * @throws Exception
      */
-    public function get(): array
+    public function get(): Snapshot
     {
-        $finder =  (new Finder())->ignoreUnreadableDirs()
-            ->in($this->getAbsolutePointer());
-        $entries = [];
-        foreach ($finder as $item) {
-            $entries[] = SnapshotEntry::fromSplFileInfo($item,$this->root);
+        return (new Snapshot())
+            ->setChildren(
+                array_map(
+                    fn(SplFileInfo $info)=>new SnapshotEntry($info),
+                    $this->walker->getEntries()
+                )
+            )
+            ->setEntry($this->head())
+            ->setAncestors([]);
+    }
+
+
+
+    function remove(): bool
+    {
+        // TODO: Implement remove() method.
+    }
+
+    function compress(): SnapshotEntry
+    {
+        // TODO: Implement compress() method.
+    }
+
+    function decompress(): array
+    {
+        // TODO: Implement decompress() method.
+    }
+
+    function move(string $newContext): array
+    {
+        // TODO: Implement move() method.
+    }
+
+    /**
+     * @throws Exception
+     */
+    function head(): SnapshotEntry
+    {
+        return new SnapshotEntry($this->walker->current());
+    }
+
+    /**
+     * @throws Exception
+     */
+    function ancestors(): array
+    {
+        $parts = explode(DIRECTORY_SEPARATOR,$this->walker->getContext());
+        $ancestors = [""];
+        $sub = "";
+        foreach($parts as $part){
+            $sub = implode([DIRECTORY_SEPARATOR],[$sub,$part]);
+            $ancestors[] = $sub;
         }
-        return $entries;
+        return $ancestors;
+    }
+
+    function getEntries(): array
+    {
+        return $this->walker->getEntries();
+    }
+
+    function setContext(string $context)
+    {
+        return $this->walker->setContext($context);
+    }
+
+    function getContext(): string
+    {
+        return $this->walker->getContext();
+    }
+
+    function search(string $text): array
+    {
+        // TODO: Implement search() method.
     }
 }

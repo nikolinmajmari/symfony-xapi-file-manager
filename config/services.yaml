@@ -7,11 +7,18 @@ services:
     arguments:
       - '@event_dispatcher'
       - '@Xapi\FsManager\Snapshot\SnapshotWalker'
-      - '@twig'
+      - '@serializer'
+
   Xapi\FsManager\Snapshot\SnapshotWalker:
     public: true
     arguments:
-      - '@filesystem'
+      - '@Xapi\FsManager\Snapshot\ScopedWalker'
+
+  Xapi\FsManager\Snapshot\Walker:
+    public: true
+
+  Xapi\FsManager\Snapshot\ScopedWalker:
+    public: true
+    arguments:
+      - '@Xapi\FsManager\Snapshot\Walker'
       - '%xapi.fs_manager.root_folder%'
-
-

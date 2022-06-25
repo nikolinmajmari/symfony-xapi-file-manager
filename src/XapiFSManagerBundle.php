@@ -1,8 +1,6 @@
 <?php
 
-namespace Xapi\FsManager;
-
-use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+namespace Xapi\FSManager;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Xapi\FsManager\DependencyInjection\XapiFSManagerExtension;
 
