@@ -6,6 +6,7 @@ use Exception;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Xapi\FSManager\DTO\Snapshot;
 use Xapi\FSManager\DTO\SnapshotEntry;
 
@@ -124,5 +125,9 @@ class SnapshotWalker implements SnapshotWalkerInterface, ContextInterface
     function search(string $text): array
     {
         // TODO: Implement search() method.
+    }
+
+    function upload(UploadedFile $file):SnapshotEntry{
+        return new SnapshotEntry($this->walker->upload($file));
     }
 }

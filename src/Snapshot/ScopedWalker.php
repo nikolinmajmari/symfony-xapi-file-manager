@@ -6,6 +6,7 @@ use Symfony\Bridge\Twig\NodeVisitor\Scope;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Xapi\FSManager\DTO\Snapshot;
 use Xapi\FSManager\DTO\SnapshotEntry;
 
@@ -33,8 +34,8 @@ class ScopedWalker implements WalkerInterface
     public function current(): SplFileInfo
     {
         $pathName = $this->getContextPathName();
-        if($pathName) {
-            return new SplFileInfo($this->walker->getContext(), $this->getContext(), $pathName);
+        if(is_string($pathName)) {
+            return new SplFileInfo($this->walker->getContext(),$this->getContext() , $this->getContext());
         }
         throw new Exception("Invalid context");
     }
@@ -77,7 +78,7 @@ class ScopedWalker implements WalkerInterface
     private function getContextPathName()
     {
         if($this->getContext()==""||$this->getContext()==DIRECTORY_SEPARATOR){
-            return "root";
+            return "";
         }
         $names = explode(DIRECTORY_SEPARATOR,$this->getContext());
         return end($names);
@@ -112,5 +113,13 @@ class ScopedWalker implements WalkerInterface
     function achive(): SplFileInfo
     {
         // TODO: Implement achive() method.
+    }
+
+    function upload(UploadedFile $file): SplFileInfo
+    {
+        $info = $this->walker->upload($file);
+        return new SplFileInfo($info->getRealPath(),
+            $this->getScopedPath($info->getPath()),
+            $this->getScopedPath($info->getPathname()));
     }
 }

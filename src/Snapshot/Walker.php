@@ -5,6 +5,7 @@ namespace Xapi\FSManager\Snapshot;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Walker implements WalkerInterface
 {
@@ -132,5 +133,15 @@ class Walker implements WalkerInterface
             }
         }
         rmdir($dir);
+    }
+
+    function upload(UploadedFile $file): \SplFileInfo
+    {
+        $path = $this->getContext().DIRECTORY_SEPARATOR.$file->getClientOriginalName();
+        if(file_exists($path)){
+            throw new \Exception("file already exists");
+        }
+        rename($file->getPathname(),$path);
+        return new \SplFileInfo($path);
     }
 }

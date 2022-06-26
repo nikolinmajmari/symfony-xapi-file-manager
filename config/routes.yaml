@@ -17,7 +17,11 @@ xapi_fs_manager_snapshot_delete:
     - POST
   controller: Xapi\FSManager\Controllers\SnapshotController::deleteSnapshot
 
-
+xapi_fs_manager_snapshot_upload:
+  path: /snapshot/upload
+  methods:
+    - POST
+  controller: Xapi\FSManager\Controllers\SnapshotController::uploadIntoSnapshot
 
 xapi_fs_manager_snapshot_create_dir:
   path: /snapshot/create_dir

@@ -4,6 +4,7 @@ namespace Xapi\FSManager\Controllers;
 
 use http\Env;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -95,5 +96,25 @@ class SnapshotController extends AbstractController
             ]);
         }
         throw new \Exception("Can not remove ".$context);
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function uploadIntoSnapshot(Request $request):Response{
+        $context = $request->get(SnapshotWalker::CONTEXT,SnapshotWalker::ROOT);
+        $this->walker->setContext($context);
+        $files = $request->files->all();
+        $entries = [];
+        /** @var UploadedFile $file */
+        foreach ($files as $file){
+            $entries[]=$this->walker->upload($file);
+        }
+        return $this->json([
+            "status"=>true,
+            "message"=>"files uploaded successfully",
+            "data"=>$entries
+        ]);
     }
 }

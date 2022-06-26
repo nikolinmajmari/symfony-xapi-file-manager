@@ -1,5 +1,6 @@
 import { createAsyncThunk,createSlice,PayloadAction } from "@reduxjs/toolkit";
 import { stat } from "fs";
+import { string } from "prop-types";
 import { act } from "react-dom/test-utils";
 import xapiClient from "../../api/client/xapi_fs_client";
 import { Snapshot } from "../../api/resource/snapshot";
@@ -54,6 +55,13 @@ export const deleteSnapshot = createAsyncThunk(
     }
 ) 
 
+export const uploadToSnapshot = createAsyncThunk(
+    "snapshot/upload",
+    async ({context,data}:{context:string,data:FormData})=>{
+        return await xapiClient.uploadFiles(context,data);
+    }
+)
+
 export const snapshotSlice = createSlice({
     name:"snapshot",
     initialState,
@@ -91,6 +99,16 @@ export const snapshotSlice = createSlice({
             state.value.children = [...action.payload.children];
             state.value.entry = {...action.payload.entry};
             state.value.ancestors = [...action.payload.ancestors];
+        })
+        .addCase(uploadToSnapshot.pending,(state)=>{
+            state.status = "loading";
+        })
+        .addCase(uploadToSnapshot.rejected,(state,action)=>{
+            state.status = "failed";
+        })
+        .addCase(uploadToSnapshot.fulfilled,(state,action)=>{
+            state.value.children = [...action.payload,...state.value.children];
+            state.status = "idle";
         })
     }
 });
