@@ -59,10 +59,11 @@ export function NewFolderModal({
   const [newFolderName,setNewFolderName] = React.useState<string>("");
   const modalRef = React.useRef<HTMLDivElement>(null);
   const overlayRef = React.useRef<HTMLDivElement>(null);
+  const parentId = useAppSelector(e=>e.snapshot.value.entry.id);
   const dispatch = useAppDispatch();
   const handleCreateFolder = async () => {
     dispatch(createFolder({
-      parent:"",
+      parent:parentId,
       folderName:newFolderName
     }));
     setNewFolderName("");

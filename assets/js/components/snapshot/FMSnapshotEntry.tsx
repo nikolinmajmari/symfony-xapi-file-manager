@@ -12,7 +12,7 @@ import xapiClient from "../../api/client/xapi_fs_client";
 import { SnapshotEntry } from "../../api/resource/snapshot_entry";
 import { useAppDispatch } from "../../app/hooks";
 import { deleteSnapshot, getSnapshot } from "../../features/snapshot/snapshotSlice";
-import FMSnapshotContextMenu from "./FMSnapshotContextMenu";
+import SnapshotEntryContextMenu from "./context/SnapshotContextMenu";
 export interface FMSnapshotEntryPropsInterface {
   entry: SnapshotEntry;
 }
@@ -48,10 +48,8 @@ export function FMSnapshotEntry(props: FMSnapshotEntryPropsInterface) {
   const onClick = () => setSelected(false);
 
   React.useEffect(() => {
-    document.addEventListener("contextmenu", onEntryClick);
     document.addEventListener("click", onEntryClick);
     return () => {
-      document.removeEventListener("contextmenu", onEntryClick);
       document.removeEventListener("click", onEntryClick);
     };
   }, []);
@@ -71,6 +69,7 @@ export function FMSnapshotEntry(props: FMSnapshotEntryPropsInterface) {
   }
 
   return (
+    <>
     <div
       className={`element grid grid-cols-11 py-3 border-gray-300 ${
         selected ? "bg-blue-100 border-b-0 border-blue-100" : "bg-white"
@@ -86,7 +85,8 @@ export function FMSnapshotEntry(props: FMSnapshotEntryPropsInterface) {
       </div>
       <div className="col-span-2 px-2">{props.entry.name}</div>
       <div className="col-span-2 px-2">{props.entry.name}</div>
-      <FMSnapshotContextMenu entryRef={entryRef} onDelete={handleDelete} onDownload={()=>xapiClient.downloadFile(props.entry.id)} />
+      <SnapshotEntryContextMenu ref={entryRef} onDelete={handleDelete} onDownload={()=>xapiClient.downloadFile(props.entry.id)} />
     </div>
+      </>
   );
 }

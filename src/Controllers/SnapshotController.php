@@ -35,6 +35,12 @@ class SnapshotController extends AbstractController
     }
 
 
+    /**
+     * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function getReactClient(): Response
     {
         return new Response($this->twig->render("@XapiFSManager/base.html.twig"));
@@ -49,6 +55,9 @@ class SnapshotController extends AbstractController
         $context = $this->dispatchAccessRequestEvent($context);
         $this->walker->setContext($context);
         $snapshot = $this->walker->get();
+        if($request->query->get("onlyDirs",false)){
+            $snapshot = $snapshot->withFoldersOnly();
+        }
         return $this->json([
             "data"=>$snapshot
         ]);

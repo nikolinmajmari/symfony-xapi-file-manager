@@ -58,6 +58,10 @@ class Snapshot implements \JsonSerializable
         return $this->children;
     }
 
+    public function getFolders():array{
+        return array_filter($this->getChildren(),fn(SnapshotEntry $child)=>$child->getSplFileInfo()->isDir());
+    }
+
     /**
      * @param array $children
      */
@@ -81,6 +85,14 @@ class Snapshot implements \JsonSerializable
         $snapshot = new self();
         $snapshot->setEntry($entry);
         return $snapshot;
+    }
+
+    public function withFoldersOnly(): Snapshot
+    {
+        return (new Snapshot())
+            ->setAncestors($this->getAncestors())
+            ->setEntry($this->getEntry())
+            ->setChildren($this->getFolders());
     }
 
     public function jsonSerialize(): array

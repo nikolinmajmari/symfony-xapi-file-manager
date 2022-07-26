@@ -7,7 +7,6 @@ import { Snapshot } from "../../api/resource/snapshot";
 import { SnapshotEntry } from "../../api/resource/snapshot_entry";
 import { RootState,AppThunk } from "../../app/store";
 
-
 export interface SnapshotState{
     value:Snapshot;
     status: 'idle'|'loading'|'failed';
@@ -29,7 +28,6 @@ const initialState:SnapshotState = {
     }
 };
 
-
 export const createFolder = createAsyncThunk(
     'snapshot/createFolder',
     async (payload:{parent:string,folderName:string})=>{
@@ -44,7 +42,7 @@ export const getSnapshot = createAsyncThunk(
         const snapshot =  await xapiClient.getSnapshot(context);
         return snapshot;
     }
-)
+);
 
 export const deleteSnapshot = createAsyncThunk(
     "snapshot/delete",
@@ -53,14 +51,14 @@ export const deleteSnapshot = createAsyncThunk(
         console.log("deleting",entry);
         return entry;
     }
-) 
+);
 
 export const uploadToSnapshot = createAsyncThunk(
     "snapshot/upload",
     async ({context,data}:{context:string,data:FormData})=>{
         return await xapiClient.uploadFiles(context,data);
     }
-)
+);
 
 export const snapshotSlice = createSlice({
     name:"snapshot",
